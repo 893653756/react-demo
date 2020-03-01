@@ -42,7 +42,7 @@ export default class Admin extends Component {
                             <Route path="/charts/pie" component={Pie} />
                             <Route path="/charts/line" component={Line} />
                             <Route path="/order" component={Order} />
-                            <Redirect from='/' exact to='/home'/>
+                            <Redirect from='/' to='/home'/>
                         </Switch>
                     </Content>
                     <Footer style={{ textAlign: 'center', color: '#BBBBB' }}>推荐使用谷歌浏览器，可以获得更佳页面操作体验</Footer>

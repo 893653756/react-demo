@@ -57,8 +57,11 @@ class LeftNav extends Component {
         this.menuNode = this.getMenuNodes(menuList);
     }
     render() {
-        const selectKey = this.props.location.pathname;
-        console.log(selectKey)
+        let selectKey = this.props.location.pathname;
+        // console.log(selectKey)
+        if (selectKey.indexOf("/product") === 0) {
+            selectKey = "/product";
+        }
         return (
             <div className="left-nav">
                 <div className="left-nav-header">
