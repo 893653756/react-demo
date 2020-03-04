@@ -75,7 +75,7 @@ export default class ProductHome extends Component {
                     return (
                         <div>
                             <LinkButton onClick={() => this.props.history.push("/product/detail", { product })}>详情</LinkButton>
-                            <LinkButton onClick={() => this.props.history.push("/product/addupdate")}>修改</LinkButton>
+                            <LinkButton onClick={() => this.props.history.push("/product/addupdate", { product, isUpdate: true })}>修改</LinkButton>
                         </div>
                     )
                 }
@@ -97,7 +97,7 @@ export default class ProductHome extends Component {
             result = await reqProducts(pageNum, PAGE_SIZE);
         }
         if (result.status === 0) {
-            const {total, list} = result;
+            const { total, list } = result;
             this.setState({
                 loading: false,
                 total: total,
