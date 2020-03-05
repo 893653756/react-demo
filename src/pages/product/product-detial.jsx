@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { Card, Icon, List } from "antd"
 import "./product.less"
+import { BASE_IMG_URL } from '../../config/constant';
 
 export default class ProductDetail extends Component {
     render() {
-        const { name, desc, price, imgs } = this.props.location.state.product;
+        const { name, desc, price, imgs, detail } = this.props.location.state.product;
         const title = (
             <span>
                 <Icon
@@ -36,7 +37,7 @@ export default class ProductDetail extends Component {
                             {imgs.map(img => (
                                 <img
                                     key={img}
-                                    src={img}
+                                    src={BASE_IMG_URL + img}
                                     className="product-img"
                                     alt="img"
                                 />
@@ -44,7 +45,8 @@ export default class ProductDetail extends Component {
                         </div>
                     </List.Item>
                     <List.Item>
-                        <span className="left">商品详情</span>
+                        <span className="left">商品详情:</span>
+                        <span dangerouslySetInnerHTML={{__html: detail}}></span>
                     </List.Item>
                 </List>
             </Card>

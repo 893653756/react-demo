@@ -39,6 +39,25 @@ export const reqUpdateCategory = (categoryId, categoryName) => ajax(BASE_PATH + 
 export const reqProducts = (pageNum, pageSize) => ajax(BASE_PATH + '/manage/product/list', { pageNum, pageSize })
 
 /**
+ * 更新商品状态(上架/下架)
+ * @param {string} productId 商品id
+ * @param {number} status 商品状态 1 | 2
+ */
+export const reqUpdateStatus = (productId, status) => ajax(BASE_PATH + '/manage/product/updateStatus', {productId, status}, POST);
+
+/**
+ * 删除指定图片
+ * @param {string} name 图片名称 
+ */
+export const reqDeleteImg = (name) => ajax(BASE_PATH + '/manage/img/delete', {name}, POST);
+
+/**
+ * 添加/更新商品
+ * @param {object} product 商品对象
+ */
+export const reqAddOrUpdateProduct = (product) => ajax(BASE_PATH + '/manage/product/' + (product._id ? 'update' : 'add'), product, POST);
+
+/**
  * jsonp 回去天气
  */
 export const reqWeather = (city) => {
