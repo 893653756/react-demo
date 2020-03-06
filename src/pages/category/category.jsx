@@ -4,6 +4,7 @@ import LinkButton from "../../components/LinkButton";
 import { reqCategorys, reqAddCategory, reqUpdateCategory } from '../../api';
 import AddForm from './add-form';
 import UpdateForm from './update-form';
+import logUtils from "../../utils/logUtils";
 
 export default class Category extends Component {
     constructor(props) {
@@ -71,7 +72,7 @@ export default class Category extends Component {
         this.setState({ loading: true });
         parentId = parentId || this.state.parentId;
         const result = await reqCategorys(parentId);
-        // console.log(result)
+        logUtils.log(result)
         if (result.status === 0) {
             if (parentId === "0") {
                 this.setState({
@@ -96,7 +97,7 @@ export default class Category extends Component {
      */
     showUpdate = (category) => {
         this.category = category;
-        console.log(category);
+        logUtils.log(category);
         this.setState({ showStatus: 2 })
     }
     /**
@@ -143,14 +144,14 @@ export default class Category extends Component {
      */
     addCategory = () => {
         this.form.validateFields(async (err, values) => {
-            // console.log(values)
+            logUtils.log(values)
             if (!err) {
                 this.setState({ loading: true, showStatus: 0 })
                 const { categoryName, parentId } = values;
                 // 清除数据
                 this.form.resetFields();
                 const result = await reqAddCategory(categoryName, parentId);
-                console.log(result);
+                logUtils.log(result);
                 if (result.status === 0) {
                     // 重新获取
                     if (parentId === this.state.parentId) {

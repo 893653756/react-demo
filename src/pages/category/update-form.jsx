@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Form, Input } from "antd"
+
 class UpdateForm extends Component {
     componentWillMount(){
         this.props.setForm(this.props.form);

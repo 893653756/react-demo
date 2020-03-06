@@ -110,13 +110,13 @@ class ProductAddUpdate extends Component {
                 if (this.isUpdate) {
                     product._id = this.product._id;
                 }
-                console.log(product)
                 // 调用接口
                 const result = await reqAddOrUpdateProduct(product);
                 if (result.status === 0) {
-                    message.success(`${this.isUpdate ? '更新' : '添加'}商品成功!`)
+                    message.success(`${this.isUpdate ? '更新' : '添加'}商品成功!`);
+                    this.props.history.goBack()
                 } else {
-                    message.error(`${this.isUpdate ? '更新' : '添加'}商品失败!`)
+                    message.error(`${this.isUpdate ? '更新' : '添加'}商品失败!`);
                 }
             }
         })
@@ -190,7 +190,6 @@ class ProductAddUpdate extends Component {
                             <Cascader
                                 options={options}
                                 loadData={this.subOptions}
-                                onChange={(value, selectedOptions) => console.log(value, selectedOptions)}
                             />
                         )}
                     </Form.Item>

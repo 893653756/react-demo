@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { Card, Button, Icon, Select, Input, Table, message } from "antd"
-import { reqProducts, reqUpdateStatus } from '../../api';
+import { reqProducts, reqUpdateStatus, reqSearchProducts } from '../../api';
 import LinkButton from '../../components/LinkButton';
 import { PAGE_SIZE } from '../../config/constant';
-
+import logUtils from "../../utils/logUtils"
 /**
  * 假数据
  */
@@ -81,29 +81,10 @@ export default class ProductHome extends Component {
                 }
             }
         ];
-        const { searchType, searchName } = this.state;
-        this.title = (
-            <span>
-                <Select value={searchType} style={{ width: "110px" }}>
-                    <Select.Option value="productName">按名称搜索</Select.Option>
-                    <Select.Option value="productDesc">按描述搜索</Select.Option>
-                </Select>
-                <Input
-                    placeholder="搜索关键字"
-                    style={{ width: "170px", margin: "0 15px" }}
-                    value={searchName}
-                    onChange={(e) => this.setState({ searchName: e.target.value })}
-                />
-                <Button type="primary" onClick={() => console.log(this.state)}>搜索</Button>
-            </span>
-        )
-        this.extra = (
-            <Button type="primary" onClick={() => this.props.history.push("/product/addupdate")}>
-                <Icon type="plus" />
-                添加商品
-            </Button>
-        )
     }
+    /**
+     * 更新商品状态
+     */
     updateStatus = async (_id, status) => {
         status = status === 1 ? 2 : 1;
         const result = await reqUpdateStatus(_id, status);
@@ -123,7 +104,7 @@ export default class ProductHome extends Component {
         const { searchName, searchType } = this.state;
         let result;
         if (searchName) {
-            result = await reqProducts(pageNum, PAGE_SIZE);
+            result = await reqSearchProducts({pageNum, pageSize: PAGE_SIZE, searchName, searchType});
         } else {
             result = await reqProducts(pageNum, PAGE_SIZE);
         }
@@ -137,7 +118,7 @@ export default class ProductHome extends Component {
         } else {
             this.setState({ loading: false })
         }
-        console.log(result)
+        logUtils.log(result)
     }
     componentWillMount() {
         this.initColumns()
@@ -146,9 +127,30 @@ export default class ProductHome extends Component {
         this.getProducts(1);
     }
     render() {
-        const { total, products } = this.state;
+        const { total, products, searchName, searchType } = this.state;
+        const title = (
+            <span>
+                <Select value={searchType} style={{ width: "110px" }}>
+                    <Select.Option value="productName">按名称搜索</Select.Option>
+                    <Select.Option value="productDesc">按描述搜索</Select.Option>
+                </Select>
+                <Input
+                    placeholder="搜索关键字"
+                    style={{ width: "170px", margin: "0 15px" }}
+                    value={searchName}
+                    onChange={(e) => this.setState({ searchName: e.target.value })}
+                />
+                <Button type="primary" onClick={() => this.getProducts(1)}>搜索</Button>
+            </span>
+        )
+        const extra = (
+            <Button type="primary" onClick={() => this.props.history.push("/product/addupdate")}>
+                <Icon type="plus" />
+                添加商品
+            </Button>
+        )
         return (
-            <Card title={this.title} extra={this.extra}>
+            <Card title={title} extra={extra}>
                 <Table
                     rowKey="_id"
                     bordered={true}

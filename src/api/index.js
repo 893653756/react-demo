@@ -39,6 +39,20 @@ export const reqUpdateCategory = (categoryId, categoryName) => ajax(BASE_PATH + 
 export const reqProducts = (pageNum, pageSize) => ajax(BASE_PATH + '/manage/product/list', { pageNum, pageSize })
 
 /**
+ * 搜索商品分页列表 (根据商品名称/商品描述)
+ * @param {object} 
+ * pageNum 请求哪一页数据
+ * pageSize 请求数据量
+ * searchName 搜索字段
+ * searchType 搜索类型
+ */
+export const reqSearchProducts = ({pageNum, pageSize, searchName, searchType}) => ajax(BASE_PATH + '/manage/product/search', {
+    pageNum,
+    pageSize,
+    [searchType]: searchName
+});
+
+/**
  * 更新商品状态(上架/下架)
  * @param {string} productId 商品id
  * @param {number} status 商品状态 1 | 2
@@ -58,13 +72,23 @@ export const reqDeleteImg = (name) => ajax(BASE_PATH + '/manage/img/delete', {na
 export const reqAddOrUpdateProduct = (product) => ajax(BASE_PATH + '/manage/product/' + (product._id ? 'update' : 'add'), product, POST);
 
 /**
+ * 获取角色列表
+ */
+export const reqRoles = () => ajax(BASE_PATH + '/manage/role/list');
+
+/**
+ * 添加角色
+ * @param {string} roleName 角色名称
+ */
+export const reqAddRole = (roleName) => ajax(BASE_PATH + '/manage/role/add', { roleName }, POST);
+
+/**
  * jsonp 回去天气
  */
 export const reqWeather = (city) => {
     return new Promise((resolve, reject) => {
         let url = `http://api.map.baidu.com/telematics/v3/weather?location=${city}&output=json&ak=3p49MVra6urFRGOT9s8UBWr2`;
         jsonp(url, {}, (err, data) => {
-            console.log("jsonp", err, data);
             if (!err && data.status === 'success') {
                 const { dayPictureUrl, weather } = data.results[0].weather_data[0];
                 resolve({ dayPictureUrl, weather })
