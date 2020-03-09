@@ -10,6 +10,7 @@
     "axios": "^0.19.2",
     "draft-js": "^0.11.4",
     "draftjs-to-html": "^0.9.1",
+    "echarts": "^4.6.0",
     "echarts-for-react": "^2.0.15-beta.1",
     "html-to-draftjs": "^1.5.0",
     "jsonp": "^0.2.1",
@@ -26,12 +27,7 @@
     "eject": "react-app-rewired eject"
   },
   "eslintConfig": {
-    "extends": "react-app",
-    "rules": {
-      "no-undef": "off",
-      "no-restricted-globals": "off",
-      "no-unused-vars": "off"
-    }
+    "extends": "react-app"
   },
   "browserslist": {
     "production": [

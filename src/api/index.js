@@ -97,13 +97,13 @@ export const reqUsers = () => ajax(BASE_PATH + '/manage/user/list');
  * 添加/更新用户数据
  * @param {object} user 用户数据 
  */
-export const reqAddOrUpdateUser = (user) => ajax(BASE_PATH + '/manage/user/' + (user._id ? 'update' : 'add'), user, POST)
+export const reqAddOrUpdateUser = (user) => ajax(BASE_PATH + '/manage/user/' + (user._id ? 'update' : 'add'), user, POST);
 
 /**
  * 删除用户
  * @param {string} userId 用户id
  */
-export const reqDeleteUser = (userId) => ajax(BASE_PATH + '/manage/user/delete', { userId }, POST)
+export const reqDeleteUser = (userId) => ajax(BASE_PATH + '/manage/user/delete', { userId }, POST);
 
 /**
  * jsonp 回去天气
