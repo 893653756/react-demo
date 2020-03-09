@@ -46,7 +46,7 @@ export const reqProducts = (pageNum, pageSize) => ajax(BASE_PATH + '/manage/prod
  * searchName 搜索字段
  * searchType 搜索类型
  */
-export const reqSearchProducts = ({pageNum, pageSize, searchName, searchType}) => ajax(BASE_PATH + '/manage/product/search', {
+export const reqSearchProducts = ({ pageNum, pageSize, searchName, searchType }) => ajax(BASE_PATH + '/manage/product/search', {
     pageNum,
     pageSize,
     [searchType]: searchName
@@ -57,13 +57,13 @@ export const reqSearchProducts = ({pageNum, pageSize, searchName, searchType}) =
  * @param {string} productId 商品id
  * @param {number} status 商品状态 1 | 2
  */
-export const reqUpdateStatus = (productId, status) => ajax(BASE_PATH + '/manage/product/updateStatus', {productId, status}, POST);
+export const reqUpdateStatus = (productId, status) => ajax(BASE_PATH + '/manage/product/updateStatus', { productId, status }, POST);
 
 /**
  * 删除指定图片
  * @param {string} name 图片名称 
  */
-export const reqDeleteImg = (name) => ajax(BASE_PATH + '/manage/img/delete', {name}, POST);
+export const reqDeleteImg = (name) => ajax(BASE_PATH + '/manage/img/delete', { name }, POST);
 
 /**
  * 添加/更新商品
@@ -81,6 +81,29 @@ export const reqRoles = () => ajax(BASE_PATH + '/manage/role/list');
  * @param {string} roleName 角色名称
  */
 export const reqAddRole = (roleName) => ajax(BASE_PATH + '/manage/role/add', { roleName }, POST);
+
+/**
+ * 更新角色权限
+ * @param {object} role 角色数据 
+ */
+export const reqUpdateRole = (role) => ajax(BASE_PATH + '/manage/role/update', role, POST);
+
+/**
+ * 获取所有用户列表
+ */
+export const reqUsers = () => ajax(BASE_PATH + '/manage/user/list');
+
+/**
+ * 添加/更新用户数据
+ * @param {object} user 用户数据 
+ */
+export const reqAddOrUpdateUser = (user) => ajax(BASE_PATH + '/manage/user/' + (user._id ? 'update' : 'add'), user, POST)
+
+/**
+ * 删除用户
+ * @param {string} userId 用户id
+ */
+export const reqDeleteUser = (userId) => ajax(BASE_PATH + '/manage/user/delete', { userId }, POST)
 
 /**
  * jsonp 回去天气

@@ -71,7 +71,6 @@ export default class ProductHome extends Component {
                 title: '操作',
                 width: "100px",
                 render: (product) => {
-                    {/*将product对象使用state传递给目标路由组件*/ }
                     return (
                         <div>
                             <LinkButton onClick={() => this.props.history.push("/product/detail", { product })}>详情</LinkButton>

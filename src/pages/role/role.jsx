@@ -3,8 +3,9 @@ import { Card, Table, Button, Modal, message } from "antd"
 import logUtils from "../../utils/logUtils"
 import AddForm from './add-form';
 import AuthForm from './auth-form';
-import { reqAddRole, reqRoles } from '../../api';
+import { reqAddRole, reqRoles, reqUpdateRole } from '../../api';
 import { formateDate } from '../../utils/dateUtils';
+import memoryUtils from "../../utils/memoryUtils"
 
 
 export default class Role extends Component {
@@ -23,7 +24,7 @@ export default class Role extends Component {
             { title: "角色名称", dataIndex: "name" },
             { title: "创建时间", dataIndex: "create_time", render: formateDate },
             { title: "授权时间", dataIndex: "auth_time", render: formateDate },
-            { title: "授权人", dataIndex: "auth_name", render: formateDate }
+            { title: "授权人", dataIndex: "auth_name" }
         ]
     }
     // 获取角色
@@ -32,7 +33,7 @@ export default class Role extends Component {
         const result = await reqRoles();
         if (result.status === 0) {
             logUtils.log(result);
-            this.setState({roles: result.data})
+            this.setState({ roles: result.data })
         }
         this.setState({ loading: false })
     }
@@ -55,6 +56,26 @@ export default class Role extends Component {
                 }
             }
         })
+    }
+    // 更新权限
+    updateRole = async () => {
+        this.handleCancel();
+        const role = this.state.role;
+        // 获取最新的menu
+        const menus = this.auth.current.getMenus();
+        role.menus = menus;
+        // 授权时间
+        role.auth_time = Date.now();
+        // 授权人
+        role.auth_name = memoryUtils.user.username;
+        // 请求更新
+        const result = await reqUpdateRole(role);
+        if (result.status === 0) {
+            message.success('设置用户权限成功');
+            this.setState({
+                roles: [...this.state.roles]
+            })
+        }
     }
     handleCancel = () => {
         this.setState({ isShowModal: 0 })
