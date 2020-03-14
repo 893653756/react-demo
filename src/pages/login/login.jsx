@@ -6,6 +6,7 @@ import Logo from "../../assets/images/logo.png";
 import { reqLogin } from "../../api";
 import memoryUtils from "../../utils/memoryUtils";
 import storageUtils from "../../utils/storageUtils";
+import logUtils from '../../utils/logUtils';
 class Login extends Component {
     /**
      * 密码自定义校验
@@ -33,6 +34,7 @@ class Login extends Component {
             if (!err) {
                 const { username, password } = values;
                 const result = await reqLogin(username, password);
+                logUtils.log("user", result)
                 // 登录成功
                 if (result.status === 0) {
                     message.success('登录成功');

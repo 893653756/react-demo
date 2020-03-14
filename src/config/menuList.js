@@ -26,12 +26,14 @@ const menuList = [
     {
         title: '用户管理',
         key: '/user',
-        icon: 'user'
+        icon: 'user',
+        isPrivate: true  // 私有的 (只有admin有权限)
     },
     {
         title: '角色管理',
         key: '/role',
         icon: 'safety',
+        isPrivate: true  // 私有的 (只有admin有权限)
     },
 
     {
